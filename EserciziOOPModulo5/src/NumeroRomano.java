@@ -9,8 +9,10 @@ public class NumeroRomano {
 		char[] charnumeroromano = numeroromano.toCharArray();
 		int somma = 0;
 		LettereRomane lettereRomane;
+		LettereRomane lettereRomaneNext;
 		for(int i = 0; i < charnumeroromano.length; i++){
-			/*lettereRomane = LettereRomane.valueOf(String.valueOf(charnumeroromano[i]));
+			lettereRomane = LettereRomane.valueOf(String.valueOf(charnumeroromano[i]));
+
 
 			switch (lettereRomane){
 				case M:
@@ -19,17 +21,59 @@ public class NumeroRomano {
 					break;
 				}
 				case C:{
-					if(i + 1 < charnumeroromano.length && (charnumeroromano[i + 1] == 'D' || charnumeroromano[i + 1] == 'M')){
-						somma -= lettereRomane.toInt();
-					}else {
+					if(i + 1 < charnumeroromano.length){
+						lettereRomaneNext = LettereRomane.valueOf(String.valueOf(charnumeroromano[i + 1]));
+
+						if(lettereRomaneNext == LettereRomane.D || lettereRomaneNext == LettereRomane.M){
+							somma -= lettereRomane.toInt();
+						}else {
+							somma += lettereRomane.toInt();
+						}
+					}else{
 						somma += lettereRomane.toInt();
 					}
 					break;
 				}
-			}*/
+				case L:{
+					somma += lettereRomane.toInt();
+					break;
+				}
+				case X:{
+					if(i + 1 < charnumeroromano.length){
+						lettereRomaneNext = LettereRomane.valueOf(String.valueOf(charnumeroromano[i + 1]));
+
+						if(lettereRomaneNext == LettereRomane.C || lettereRomaneNext == LettereRomane.L){
+							somma -= lettereRomane.toInt();
+						}else {
+							somma += lettereRomane.toInt();
+						}
+					}else{
+						somma += lettereRomane.toInt();
+					}
+					break;
+				}
+				case V:{
+					somma += lettereRomane.toInt();
+					break;
+				}
+				case I:{
+					if(i + 1 < charnumeroromano.length){
+						lettereRomaneNext = LettereRomane.valueOf(String.valueOf(charnumeroromano[i + 1]));
+
+						if(lettereRomaneNext != LettereRomane.I){
+							somma -= lettereRomane.toInt();
+						}else {
+							somma += lettereRomane.toInt();
+						}
+					}else{
+						somma += lettereRomane.toInt();
+					}
+					break;
+				}
+			}
 
 
-			if(charnumeroromano[i] == 'M'){
+			/*if(charnumeroromano[i] == 'M'){
 				somma += LettereRomane.M.toInt();
 			}
 			if(charnumeroromano[i] == 'D'){
@@ -61,7 +105,7 @@ public class NumeroRomano {
 				}else {
 					somma += LettereRomane.I.toInt();
 				}
-			}
+			}*/
 
 		}
 		return somma;
