@@ -1,11 +1,11 @@
 package Biblioteca;
-import static Utils.MergeSortArray.MergeSort;
+import static Utils.MergeSortArray.mergeSort;
 
 public class Biblioteca {
 	int[] libri;
 
 	Biblioteca(int[] libri){
-		this.libri = MergeSort(libri);
+		this.libri = mergeSort(libri);
 	}
 
 	public boolean esisteLibro(int libroinput){

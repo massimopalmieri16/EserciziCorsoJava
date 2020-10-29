@@ -1,7 +1,7 @@
 package Utils;
 
 public class MergeSortArray {
-	public static int[] MergeSort (int[] array) {
+	public static int[] mergeSort (int[] array) {
 
 		if(array.length == 1)
 			return array;
@@ -10,8 +10,8 @@ public class MergeSortArray {
 
 		int[] sinistra = split(array, 0, centro);
 		int[] destra = split(array, centro, array.length);
-		sinistra = MergeSort(sinistra);
-		destra = MergeSort(destra);
+		sinistra = mergeSort(sinistra);
+		destra = mergeSort(destra);
 
 
 		return merge(destra, sinistra);
@@ -32,7 +32,7 @@ public class MergeSortArray {
 		int i = 0;
 		int j = 0;
 		while(i< sinistra.length && j< destra.length){
-			if(sinistra[i]< destra[j]){
+			if(sinistra[i] < destra[j]){
 				array[i+j] = sinistra[i];
 				i++;
 			}else{
