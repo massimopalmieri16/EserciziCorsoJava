@@ -1,13 +1,19 @@
 package GestorePrenotazioni;
 
 public class Prenotazione {
-	String id;
-	Preferenza preferenza;
+	String code;
 	int numPosti;
 
-	Prenotazione(String id, Preferenza preferenza, int numPosti){
-		this.id = id;
-		this.preferenza = preferenza;
+	Prenotazione(String code, int numPosti){
+		this.code = code;
 		this.numPosti = numPosti;
+	}
+
+	public String getCode() {
+		return code;
+	}
+
+	public int getNumPosti() {
+		return numPosti;
 	}
 }

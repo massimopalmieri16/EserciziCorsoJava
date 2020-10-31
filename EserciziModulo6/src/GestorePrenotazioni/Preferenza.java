@@ -1,5 +1,5 @@
 package GestorePrenotazioni;
 
 public enum Preferenza {
-	INTERNO,ESTERNO;
+	INTERNO, ESTERNO;
 }

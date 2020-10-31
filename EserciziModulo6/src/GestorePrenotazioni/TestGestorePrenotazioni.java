@@ -44,16 +44,16 @@ public class TestGestorePrenotazioni {
 			}
 		}
 		System.out.println(prenotazioniInterno + prenotazioniEsterno == 5);
-//verifichiamo i posti effettivamente riservati
+		//verifichiamo i posti effettivamente riservati
 		int postiTotali = 0;
 		for (int i = 0; i < prenotazioniInternoArray.length; i++) {
 			if (prenotazioniInternoArray[i] != null) {
-				postiTotali += prenotazioniInternoArray[i].getnPosti();
+				postiTotali += prenotazioniInternoArray[i].getNumPosti();
 			}
 		}
 		for (int i = 0; i < prenotazioniEsternoArray.length; i++) {
 			if (prenotazioniEsternoArray[i] != null) {
-				postiTotali += prenotazioniEsternoArray[i].getnPosti();
+				postiTotali += prenotazioniEsternoArray[i].getNumPosti();
 			}
 		}
 		System.out.println(postiTotali == 6);
