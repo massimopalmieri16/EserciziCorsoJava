@@ -2,27 +2,29 @@ package Treno;
 
 import java.util.ArrayList;
 
-public class Treno {
+public abstract class Treno {
 	private String codice;
 	private int velAttuale;
 	private int maxVagoni;
-	private int numPasseggeri;
-	private StatoPorte statoPorte;
+	private boolean inStazione;
+	private ArrayList<Vagone> vagoni = new ArrayList<>();
 
 	Treno(String codice, int maxVagoni){
 		this.codice = codice;
 		this.maxVagoni = maxVagoni;
 		velAttuale = 0;
-		statoPorte = StatoPorte.CHIUSE;
+		inStazione = false;
 	}
 
 	public void parti(){
 		chiudiPorte();
 		velAttuale = 100;
+		inStazione = false;
 	}
 
 	public void entraInStazione(){
 		fermati();
+		inStazione = true;
 		apriPorte();
 	}
 
@@ -30,28 +32,48 @@ public class Treno {
 		velAttuale = 0;
 	}
 
-	public void apriPorte(){
-		statoPorte = StatoPorte.APERTE;
-	}
-
-	public void chiudiPorte(){
-		statoPorte = StatoPorte.CHIUSE;
-	}
-
-	public boolean salePassegero(){
-		// se porte aperte
-		if(statoPorte == StatoPorte.APERTE) {
-			numPasseggeri ++;
+	public boolean addVagone(Vagone vagone){
+		if(vagoni.size() < maxVagoni && inStazione){
+			vagoni.add(vagone);
 			return true;
 		}else {
 			return false;
 		}
 	}
-	public boolean scendePassegero(){
-		// se porte aperte e almeno un passeggero a bordo
-		if(statoPorte == StatoPorte.APERTE && numPasseggeri > 0) {
-			numPasseggeri --;
-			return true;
+
+	public boolean removeVagone(int indiceVagone){
+		if(vagoni.size() > 0 && inStazione && indiceVagone < vagoni.size()){
+			Vagone vagone = vagoni.get(indiceVagone);
+			return vagone.vagoneVuoto() && vagoni.remove(vagone);
+		}else {
+			return false;
+		}
+	}
+
+	public void apriPorte(){
+		for(Vagone i:vagoni){
+			i.apriPorte();
+		}
+	}
+
+	public void chiudiPorte(){
+		for(Vagone i:vagoni){
+			i.chiudiPorte();
+		}
+	}
+
+	public boolean salePassegero(Passeggero passeggero, int indiceVagone){
+		if(inStazione && indiceVagone < vagoni.size()) {
+			Vagone vagone = vagoni.get(indiceVagone);
+			return vagone.salePassegero(passeggero);
+		}else {
+			return false;
+		}
+	}
+	public boolean scendePassegero(Passeggero passeggero, int indiceVagone){
+		if(inStazione && indiceVagone < vagoni.size()) {
+			Vagone vagone = vagoni.get(indiceVagone);
+			return vagone.scendePassegero(passeggero);
 		}else {
 			return false;
 		}
