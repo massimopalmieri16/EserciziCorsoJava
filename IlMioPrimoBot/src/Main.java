@@ -4,6 +4,7 @@ import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.util.Scanner;
 
+import ListaDellaSpesa.ListaDellaSpesa;
 import com.botticelli.bot.Bot;
 import com.botticelli.messagereceiver.MessageReceiver;
 
@@ -26,8 +27,10 @@ public class Main {
 
 		// Primo esercizio
 		//Bot bot = new PrimoBot(token);
-		// Secondo esercizio
-		Bot bot = new RandomMediaBot(token);
+		// Secondo esercizio, media random
+		//Bot bot = new RandomMediaBot(token);
+		// Terzo esercizio, Lista della spesa
+		Bot bot = new ListaDellaSpesa(token);
 		MessageReceiver mr = new MessageReceiver(bot, 500, 1);
 		mr.ignoreEditedMessages();
 		mr.start();

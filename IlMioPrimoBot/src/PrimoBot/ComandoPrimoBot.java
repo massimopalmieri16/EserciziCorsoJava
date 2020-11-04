@@ -1,9 +1,11 @@
-public enum Comando {
+package PrimoBot;
+
+public enum ComandoPrimoBot {
 	SALUTA("saluta"), MONOPATTINO("\uD83D\uDEF4"), SCOOTER("\uD83D\uDEF5"),
 	MOTO("\uD83C\uDFCD️"), TASTIERA("tastiera"), ERRORE("errore"), START("/start");
 	private String stringaComando;
 
-	Comando(String stringaComando){
+	ComandoPrimoBot(String stringaComando){
 		this.stringaComando = stringaComando;
 	}
 
@@ -13,14 +15,14 @@ public enum Comando {
 		return stringaComando;
 	}
 
-	public static Comando fromString(String text) {
+	public static ComandoPrimoBot fromString(String text) {
 		if (text != null) {
-			for (Comando c : Comando.values()) {
+			for (ComandoPrimoBot c : ComandoPrimoBot.values()) {
 				if (text.equals(c.stringaComando) || text.toLowerCase().equals(c.stringaComando)) {
 					return c;
 				}
 			}
 		}
-		return Comando.ERRORE;
+		return ComandoPrimoBot.ERRORE;
 	}
 }

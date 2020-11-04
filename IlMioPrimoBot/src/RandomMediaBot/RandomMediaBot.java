@@ -1,68 +1,36 @@
+package RandomMediaBot;
+
 import com.botticelli.bot.Bot;
-import com.botticelli.bot.request.methods.MessageToSend;
+import com.botticelli.bot.request.methods.*;
 import com.botticelli.bot.request.methods.types.*;
-
 import java.util.ArrayList;
-import java.util.List;
 
-public class PrimoBot extends Bot {
+public class RandomMediaBot extends Bot {
+	private ArrayList<String> referencesSticker;
+	private ArrayList<String> referencesMedia;
+	private ArrayList<String> referencesPhoto;
+	private ArrayList<String> referencesAudio;
+	private ArrayList<String> referencesVoice;
 
-	public PrimoBot(String token)
-	{
+	public RandomMediaBot(String token) {
 		super(token);
+		referencesSticker = new ArrayList<>();
+		referencesMedia = new ArrayList<>();
+		referencesPhoto = new ArrayList<>();
+		referencesAudio = new ArrayList<>();
+		referencesVoice = new ArrayList<>();
 	}
 
 	@Override
 	public void textMessage(Message message) {
-		System.out.println("Stringa ricevuta: " + message.getText());
-		Comando c = Comando.fromString(message.getText());
-		MessageToSend messageToSend;
-		switch (c) {
-			case SALUTA:
-				String stringMessage = "Ciao " + message.getChat().getUserName() + ", come stai?";
-				messageToSend = new MessageToSend(message.getChat().getId(), stringMessage);
-				sendMessage(messageToSend);
-				break;
-			case MONOPATTINO:
-				messageToSend = new MessageToSend(message.getChat().getId(), "Esercizio facile");
-				sendMessage(messageToSend);
-				break;
-			case SCOOTER:
-				messageToSend = new MessageToSend(message.getChat().getId(), "Esercizio medio");
-				sendMessage(messageToSend);
-				break;
-			case MOTO:
-				messageToSend = new MessageToSend(message.getChat().getId(), "Esercizio difficile");
-				sendMessage(messageToSend);
-				break;
-			case TASTIERA:
-				List<List<KeyboardButton>> keyboard = new ArrayList<>();
-				List<KeyboardButton> line = new ArrayList<>();
-				line.add(new KeyboardButton(Comando.MONOPATTINO.toString()));
-				line.add(new KeyboardButton(Comando.SCOOTER.toString()));
-				line.add(new KeyboardButton(Comando.MOTO.toString()));
-				keyboard.add(line);
-				ReplyKeyboardMarkupWithButtons replyKeyboard = new ReplyKeyboardMarkupWithButtons(keyboard);
-				replyKeyboard.setResizeKeyboard(true);
 
-				MessageToSend mts = new MessageToSend(message.getFrom().getId(), "Ecco la tastiera");
-				mts.setReplyMarkup(replyKeyboard);
-				sendMessage(mts);
-				break;
-			case START:
-				messageToSend = new MessageToSend(message.getChat().getId(), "Benvenuto nel Primo Bot");
-				sendMessage(messageToSend);
-				break;
-			case ERRORE:
-				messageToSend = new MessageToSend(message.getChat().getId(), "Comando non valido");
-				sendMessage(messageToSend);
-				break;
-		}
 	}
 
 	@Override
 	public void audioMessage(Message message) {
-
+		referencesAudio.add(message.getAudio().getFileID());
+		String audioReferenceToSend = referencesAudio.get(RandomRange.getRandomNumber(0,referencesAudio.size() - 1));
+		sendAudiobyReference(new AudioReferenceToSend(message.getFrom().getId(), audioReferenceToSend));
 	}
 
 	@Override
@@ -72,22 +40,32 @@ public class PrimoBot extends Bot {
 
 	@Override
 	public void voiceMessage(Message message) {
-
+		referencesVoice.add(message.getVoice().getFileID());
+		String voiceReferenceToSend = referencesVoice.get(RandomRange.getRandomNumber(0,referencesVoice.size() - 1));
+		sendVoicebyReference(new VoiceReferenceToSend(message.getFrom().getId(), voiceReferenceToSend));
 	}
 
 	@Override
 	public void stickerMessage(Message message) {
-
+		referencesSticker.add(message.getSticker().getFileID());
+		String stickerReferenceToSend = referencesSticker.get(RandomRange.getRandomNumber(0,referencesSticker.size() - 1));
+		sendStickerbyReference(new StickerReferenceToSend(message.getFrom().getId(), stickerReferenceToSend));
 	}
 
 	@Override
 	public void documentMessage(Message message) {
-
+		referencesMedia.add(message.getDocument().getFileID());
+		String mediaReferenceToSend = referencesMedia.get(RandomRange.getRandomNumber(0,referencesMedia.size() - 1));
+		sendDocumentbyReference(new DocumentReferenceToSend(message.getFrom().getId(), mediaReferenceToSend));
 	}
 
 	@Override
 	public void photoMessage(Message message) {
-
+		for(PhotoSize i:message.getPhoto()){
+			referencesPhoto.add(i.getFileID());
+		}
+		String photoReferenceToSend = referencesPhoto.get(RandomRange.getRandomNumber(0,referencesPhoto.size() - 1));
+		sendPhotobyReference(new PhotoReferenceToSend(message.getFrom().getId(), photoReferenceToSend));
 	}
 
 	@Override
