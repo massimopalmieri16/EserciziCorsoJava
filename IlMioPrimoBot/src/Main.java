@@ -5,6 +5,8 @@ import java.net.UnknownHostException;
 import java.util.Scanner;
 
 import ListaDellaSpesa.ListaDellaSpesa;
+import Questionari.Questionari;
+import Questionari.Domanda;
 import com.botticelli.bot.Bot;
 import com.botticelli.messagereceiver.MessageReceiver;
 
@@ -30,8 +32,12 @@ public class Main {
 		// Secondo esercizio, media random
 		//Bot bot = new RandomMediaBot(token);
 		// Terzo esercizio, Lista della spesa
-		Bot bot = new ListaDellaSpesa(token);
-		MessageReceiver mr = new MessageReceiver(bot, 500, 1);
+		//Bot bot = new ListaDellaSpesa(token);
+		// Quarto esercizio, questionari
+		Questionari botQuestionari = new Questionari(token);
+		botQuestionari.addQuestionario("Sport", Domanda.generateDomandeSport());
+		botQuestionari.addQuestionario("Arte", Domanda.generateDomandeArte());
+		MessageReceiver mr = new MessageReceiver(botQuestionari, 500, 1);
 		mr.ignoreEditedMessages();
 		mr.start();
 	}

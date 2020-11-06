@@ -18,7 +18,6 @@ public class ListaDellaSpesa extends Bot {
 		super(token);
 
 		listeDellaSpesa = new ArrayList<>();
-		listeDellaSpesa.add(new ArrayList<>());
 		listaUtenti = new ArrayList<>();
 		aggiuntaInCorso = false;
 		rimozioneInCorso = false;
@@ -29,30 +28,40 @@ public class ListaDellaSpesa extends Bot {
 		System.out.println("Stringa ricevuta: " + message.getText());
 		MessageToSend messageToSend;
 
-		if(aggiuntaInCorso){
-			System.out.println("Aggiunta in corso");
-			String[] parts = message.getText().split("-");
-			int indiceUtente = listaUtenti.indexOf(message.getChat().getId());
-			int quantita = 0;
-			if(parts.length == 2) {
-				quantita = Integer.parseInt(parts[1]);
-			}else {
-				quantita = 1;
-			}
-			listeDellaSpesa.get(indiceUtente).add(new Prodotto(parts[0], quantita));
+		Long iDUtente = message.getChat().getId();
+		// se utente non presente lo aggiungo
+		if (!listaUtenti.contains(iDUtente)) {
+			listeDellaSpesa.add(new ArrayList<>());
+			listaUtenti.add(iDUtente);
+		}
+		int indiceUtente = listaUtenti.indexOf(message.getChat().getId());
 
-			messageToSend = new MessageToSend(message.getChat().getId(), "Aggiunto " + parts[0] + " quantita " + quantita);
-			sendMessage(messageToSend);
+		if(aggiuntaInCorso){
+			try {
+				System.out.println("Aggiunta in corso");
+				String[] parts = message.getText().split("-");
+				int quantita = 0;
+				if (parts.length == 2) {
+					quantita = Integer.parseInt(parts[1]);
+				} else {
+					quantita = 1;
+				}
+				listeDellaSpesa.get(indiceUtente).add(new Prodotto(parts[0], quantita));
+
+				messageToSend = new MessageToSend(message.getChat().getId(), "Aggiunto " + parts[0] + " quantita " + quantita);
+				sendMessage(messageToSend);
+			}catch (Exception e){
+				System.out.println(e.getMessage());
+			}
 
 			aggiuntaInCorso = false;
 		}else if(rimozioneInCorso){
 			System.out.println("Rimozione in corso");
 
-			int indiceUtente = listaUtenti.indexOf(message.getChat().getId());
 			boolean rimosso = false;
 
 			for(int i = 0; i < listeDellaSpesa.get(indiceUtente).size(); i++){
-				if(listeDellaSpesa.get(indiceUtente).get(i).getNome().compareTo(message.getText()) == 0){
+				if(listeDellaSpesa.get(indiceUtente).get(i).getNome().equals(message.getText())){
 					listeDellaSpesa.get(indiceUtente).remove(i);
 					rimosso = true;
 					break;
@@ -93,10 +102,10 @@ public class ListaDellaSpesa extends Bot {
 				case LISTA_DELLA_SPESA:
 					System.out.println("Stampo lista della spesa");
 					System.out.println(listaUtenti.toString());
-					if (listeDellaSpesa.size() != 0 && listeDellaSpesa.get(0).size() != 0) {
+					if (listeDellaSpesa.size() != 0 && listeDellaSpesa.get(indiceUtente).size() != 0) {
 						System.out.println("Lista popolata");
 						String strOut = "";
-						for (Prodotto i : listeDellaSpesa.get(0)) {
+						for (Prodotto i : listeDellaSpesa.get(indiceUtente)) {
 							strOut += i.toString() + "\n";
 						}
 						System.out.println(strOut);
@@ -109,12 +118,6 @@ public class ListaDellaSpesa extends Bot {
 					sendMessage(messageToSend);
 					break;
 				case AGGIUNGI:
-					Long iDUtente = message.getChat().getId();
-					// se utente non presente lo aggiungo
-					if (!listaUtenti.contains(iDUtente)) {
-						listaUtenti.add(iDUtente);
-					}
-					int indiceUtente = listaUtenti.indexOf(iDUtente);
 					System.out.println("Indice utente" + indiceUtente);
 
 					aggiuntaInCorso = true;
@@ -122,7 +125,6 @@ public class ListaDellaSpesa extends Bot {
 
 					break;
 				case RIMUOVI:
-					iDUtente = message.getChat().getId();
 					indiceUtente = listaUtenti.indexOf(iDUtente);
 					System.out.println("Indice utente" + indiceUtente);
 

@@ -61,9 +61,7 @@ public class RandomMediaBot extends Bot {
 
 	@Override
 	public void photoMessage(Message message) {
-		for(PhotoSize i:message.getPhoto()){
-			referencesPhoto.add(i.getFileID());
-		}
+		referencesPhoto.add(message.getPhoto().get(0).getFileID());
 		String photoReferenceToSend = referencesPhoto.get(RandomRange.getRandomNumber(0,referencesPhoto.size() - 1));
 		sendPhotobyReference(new PhotoReferenceToSend(message.getFrom().getId(), photoReferenceToSend));
 	}
