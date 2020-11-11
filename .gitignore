@@ -4,3 +4,6 @@
 *.class
 *.xml
 IlMioPrimoBot/token.txt
+EserciziModulo8/out/production/EserciziModulo8/TweetsParser/trumptweets.csv
+EserciziModulo8/out/production/EserciziModulo8/TweetsParser/english_stopwords.txt
+EserciziModulo8/out/production/EserciziModulo8/TweetsParser/realdonaldtrump.csv
