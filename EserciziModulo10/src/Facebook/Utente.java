@@ -24,7 +24,7 @@ public class Utente {
 
 	public void aggiungiAmicoRecursion(Utente utente){
 		if(amici.add(utente)) {
-			utente.aggiungiAmico(this);
+			utente.aggiungiAmicoRecursion(this);
 		}
 	}
 
