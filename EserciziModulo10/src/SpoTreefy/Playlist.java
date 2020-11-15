@@ -41,4 +41,14 @@ public class Playlist {
 	public int hashCode() {
 		return Objects.hash(nomePlaylist);
 	}
+
+	@Override
+	public String toString() {
+		StringBuilder out = new StringBuilder();
+		out.append("Playlist: ").append(nomePlaylist);
+		for (Canzone canzone : canzoni) {
+			out.append(System.lineSeparator()).append(canzone.toString());
+		}
+		return out.toString();
+	}
 }

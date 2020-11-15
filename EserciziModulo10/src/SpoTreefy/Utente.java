@@ -7,15 +7,14 @@ public class Utente {
 	private final String nome;
 	private ArrayDeque<Canzone> codaDiRiproduzione;
 	private HashSet<Utente> utentiSeguiti;
-	private HashSet<Canzone> storicoCanzoni;
-	//private TreeSet<CanzoneStorico> storicoCanzoni;
+	private TreeSet<CanzoneStorico> storicoCanzoni;
 
 	public Utente(String email, String nome) {
 		this.email = email;
 		this.nome = nome;
 		codaDiRiproduzione = new ArrayDeque<>();
 		utentiSeguiti = new HashSet<>();
-		storicoCanzoni = new HashSet<>();
+		storicoCanzoni = new TreeSet<>();
 	}
 
 	public void aggiungiBranoCoda(Canzone c){
@@ -28,9 +27,8 @@ public class Utente {
 
 	public Canzone riproduciBranoSuccessivo(){
 		if(codaDiRiproduzione.size() == 0) return null;
-		storicoCanzoni.add(codaDiRiproduzione.pollFirst());
-		return codaDiRiproduzione.pollFirst();
-		/*Canzone canzone = codaDiRiproduzione.pollFirst();
+		Canzone canzone = codaDiRiproduzione.pollFirst();
+		// TODO non c'è nessun altro modo più carino per creare un oggetto CanzoneStorica partendo da canzone?
 		CanzoneStorico c = new CanzoneStorico(canzone.getTitolo(), canzone.getArtista(), canzone.getAlbum(), canzone.getGenere());
 		for (CanzoneStorico canzoneStorico : storicoCanzoni) {
 			if(canzoneStorico.equals(c)){
@@ -39,9 +37,9 @@ public class Utente {
 			}
 		}
 
-		c.incrAscolti();
 		System.out.println(storicoCanzoni.add(c));
-		return c;*/
+		c.incrAscolti();
+		return c;
 	}
 
 	public void svuotaCodaRiproduzione(){
@@ -58,6 +56,7 @@ public class Utente {
 
 	public void stampaCodaRiproduzione(){
 		System.out.println("Coda di riproduzione di " + this.nome);
+		if(codaDiRiproduzione.isEmpty()) System.out.println("Coda di riproduzione vuota");
 		for (Canzone canzone : codaDiRiproduzione) {
 			System.out.println(canzone.toString());
 		}
@@ -65,8 +64,9 @@ public class Utente {
 
 	public void stampaStoricoRiproduzione(){
 		System.out.println("Storico canzoni ascoltate di " + this.nome);
-		for (Canzone canzoneStorico : storicoCanzoni) {
-			System.out.println(canzoneStorico.toString() + " ascoltata " /*+ canzoneStorico.getNumAscolti() + " volte"*/);
+		if(storicoCanzoni.isEmpty()) System.out.println("Storico canzoni vuoto");
+		for (CanzoneStorico canzoneStorico : storicoCanzoni) {
+			System.out.println(canzoneStorico.toString() + " ascoltata " + canzoneStorico.getNumAscolti() + " volte");
 		}
 	}
 

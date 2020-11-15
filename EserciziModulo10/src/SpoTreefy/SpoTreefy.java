@@ -13,6 +13,10 @@ public class SpoTreefy {
 		playlistHashSet = new HashSet<>();
 	}
 
+	/**********************************************
+	 Metodi per aggiunta utenti, canzoni, playlist in SpoTreefy
+	 **********************************************/
+
 	public boolean aggiungiUtente(Utente u){
 		if(utenti.add(u)){
 			System.out.println("Utente aggiunto correttamente");
@@ -22,7 +26,6 @@ public class SpoTreefy {
 			return false;
 		}
 	}
-
 	public boolean aggiungiCanzone(Canzone c){
 		if(canzoni.add(c)){
 			System.out.println("Brano aggiunto correttamente");
@@ -32,7 +35,6 @@ public class SpoTreefy {
 			return false;
 		}
 	}
-
 	public boolean aggiungiPlaylist(Playlist p){
 		if(playlistHashSet.add(p)){
 			System.out.println("Playlist aggiunta correttamente");
@@ -42,7 +44,6 @@ public class SpoTreefy {
 			return false;
 		}
 	}
-
 	public boolean cancellaPlaylist(Utente u, Playlist p){
 		if(p.getProprietario().equals(u)){
 			if(playlistHashSet.remove(p)){
@@ -58,6 +59,10 @@ public class SpoTreefy {
 		}
 	}
 
+	/**********************************************
+	 Metodi per aggiunta e rimozione brani playlist
+	 **********************************************/
+
 	public boolean aggiungiBranoPlaylist(Playlist p, Canzone c){
 		if(playlistHashSet.contains(p)){
 			if(p.aggiungiCanzone(c)){
@@ -72,7 +77,6 @@ public class SpoTreefy {
 			return false;
 		}
 	}
-
 	public boolean rimuoviBranoPlaylist(Playlist p, Canzone c){
 		if(playlistHashSet.contains(p)){
 			if(p.rimuoviCanzone(c)){
@@ -88,25 +92,9 @@ public class SpoTreefy {
 		}
 	}
 
-	public boolean aggiungiBranoCoda(Utente u, Canzone c){
-		if(!utenti.contains(u)) {
-			System.out.println("Utente non registrato");
-			return false;
-		}else {
-			u.aggiungiBranoCoda(c);
-			return true;
-		}
-	}
-
-	public boolean aggiungiBranoProssimo(Utente u, Canzone c){
-		if(!utenti.contains(u)) {
-			System.out.println("Utente non registrato");
-			return false;
-		}else {
-			u.aggiungiBranoProssimo(c);
-			return true;
-		}
-	}
+	/**********************************************
+	 Metodi per gestione coda di riproduzione
+	 **********************************************/
 
 	public Canzone riproduciBranoSuccessivo(Utente u){
 		if(!utenti.contains(u)) {
@@ -116,7 +104,24 @@ public class SpoTreefy {
 			return u.riproduciBranoSuccessivo();
 		}
 	}
-
+	public boolean aggiungiBranoCoda(Utente u, Canzone c){
+		if(!utenti.contains(u)) {
+			System.out.println("Utente non registrato");
+			return false;
+		}else {
+			u.aggiungiBranoCoda(c);
+			return true;
+		}
+	}
+	public boolean aggiungiBranoProssimo(Utente u, Canzone c){
+		if(!utenti.contains(u)) {
+			System.out.println("Utente non registrato");
+			return false;
+		}else {
+			u.aggiungiBranoProssimo(c);
+			return true;
+		}
+	}
 	public boolean svuotaCodaRiproduzione(Utente u){
 		if(!utenti.contains(u)) {
 			System.out.println("Utente non registrato");
@@ -126,7 +131,6 @@ public class SpoTreefy {
 			return true;
 		}
 	}
-
 	public boolean aggiungiPlaylistCoda(Utente u, Playlist p){
 		if(!utenti.contains(u)) {
 			System.out.println("Utente non registrato");
@@ -140,11 +144,19 @@ public class SpoTreefy {
 		}
 	}
 
+	/**********************************************
+	 Metodi per stampare dati
+	 **********************************************/
+
 	public void stampaCodaRiproduzione(Utente u){
 		u.stampaCodaRiproduzione();
 	}
 
 	public void stampaStoricoRiproduzione(Utente u){
 		u.stampaStoricoRiproduzione();
+	}
+
+	public void stampaPlaylist(Playlist playlist){
+		System.out.println(playlist.toString());
 	}
 }
