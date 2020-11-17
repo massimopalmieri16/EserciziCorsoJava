@@ -6,13 +6,11 @@ import java.awt.image.BufferedImage;
 public class ThreadImmagine extends Thread{
 	private BufferedImage inputImage;
 	private BufferedImage outputImage;
-	private int wStart, wEnd, hStart, hEnd;
+	private int hStart, hEnd;
 
-	public ThreadImmagine(BufferedImage inputImage, BufferedImage outputImage, int wStart, int wEnd, int hStart, int hEnd) {
+	public ThreadImmagine(BufferedImage inputImage, BufferedImage outputImage, int hStart, int hEnd) {
 		this.inputImage = inputImage;
 		this.outputImage = outputImage;
-		this.wStart = wStart;
-		this.wEnd = wEnd;
 		this.hStart = hStart;
 		this.hEnd = hEnd;
 	}
@@ -24,8 +22,8 @@ public class ThreadImmagine extends Thread{
 		Color black = new Color(0,0,0);
 		Color white = new Color(255,255,255);
 
-		for (int i = wStart; i < wEnd; i++)
-			for (int j = hStart; j < hEnd; j++) //itero sui pixel dell'immagine
+		for (int j = hStart; j < hEnd; j++) //itero sui pixel dell'immagine
+			for (int i = 0; i < inputImage.getWidth(); i++)
 			{
 				double sumNeighboors = 0;
 				Color currentPixel = new Color(inputImage.getRGB(i, j));

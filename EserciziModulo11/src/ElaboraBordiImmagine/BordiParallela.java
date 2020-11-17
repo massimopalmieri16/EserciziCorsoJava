@@ -24,16 +24,16 @@ public class BordiParallela {
 
 		// Test divisione dinamica
 		int numThread = 50; // Usare variabile numThread per variare il numero di Thread da far partire
-		int widthPart = inputImage.getWidth() / numThread;
-		int widthStart = 0;
-		int widthEnd = widthPart;
+		int heightPart = inputImage.getHeight() / numThread;
+		int heigthStart = 0;
+		int heigthEnd = heightPart;
 		ArrayList<ThreadImmagine> listaThread = new ArrayList<>();
 		for(int i = 0; i < numThread; i ++){
-			ThreadImmagine threadImmagine = new ThreadImmagine(inputImage, outputImage, widthStart, widthEnd, 0, inputImage.getHeight());
+			ThreadImmagine threadImmagine = new ThreadImmagine(inputImage, outputImage,heigthStart, heigthEnd);
 			threadImmagine.start();
-			widthStart += widthPart;
-			widthEnd += widthPart;
-			if(widthEnd + widthPart > inputImage.getWidth()) widthEnd = inputImage.getWidth();
+			heigthStart += heightPart;
+			heigthEnd += heightPart;
+			if(heigthEnd + heightPart > inputImage.getHeight()) heigthEnd = inputImage.getHeight();
 			listaThread.add(threadImmagine);
 		}
 		try{
