@@ -28,7 +28,6 @@ public class Utente {
 	public Canzone riproduciBranoSuccessivo(){
 		if(codaDiRiproduzione.size() == 0) return null;
 		Canzone canzone = codaDiRiproduzione.pollFirst();
-		// TODO non c'è nessun altro modo più carino per creare un oggetto CanzoneStorica partendo da canzone?
 		CanzoneStorico c = new CanzoneStorico(canzone.getTitolo(), canzone.getArtista(), canzone.getAlbum(), canzone.getGenere());
 		for (CanzoneStorico canzoneStorico : storicoCanzoni) {
 			if(canzoneStorico.equals(c)){
